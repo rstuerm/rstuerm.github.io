@@ -18,16 +18,16 @@
   <style>
     video {
       position: relative;
-      width: calc(100%-50px);
-      height: 100vh; 
+      width: 100%;
+      height: auto; 
       background: white;
       display: block;
       outline: none;
     }
     img {
       position: relative;
-      width: calc(100%-50px);
-      height: 100vh; 
+      width: 100%;
+      height: auto; 
       background: white;
       display: block;
       outline: none;
@@ -81,7 +81,7 @@
         <h1 class="mt-4">8-Bit CPU</h1>
         <p>I started this project to gain a deeper understanding of how computers work at a level as close to the hardware as possible. </p>
 
-        <img src="./main.jpg" alt="8-Bit CPU" style="max-height: 800px; max-width: 600px;">
+        <img src="./main.jpg" alt="8-Bit CPU" style="max-width: 600px;">
         <p> Image of the completed CPU. </p>
 
         My goals and design requirements for the project were as follows:
@@ -118,7 +118,7 @@
 
         <p>When I was first starting this project, I actually assembled the entire processor on breadboards. This used well over 150ft of wire. Although each individual module worked when tested, I ran into problems connecting all the modules into the larger computer. The connections tended to become loose within the breadboard holes and there were simply too many connections to keep track of. For this reason, I moved to PCB design earlier then anticipated. I first tried to design a board with the DIP packages I used in the breadboard. However, when routing was about 80% complete it became clear this would not be possible on a two layer board. The cost of moving to a four layer board with an 8" by 8" size was comparable to purchasing smaller packages and using a four layer board with a smaller size. I opted for the smallest available package for this line of chips, the TSSOP. This allowed me to get a board size of 125mm by 150mm on a four layer board. I was able to keep a dedicated ground layer, but some traces needed to be routed through the 5V power layer. </p>
 
-        <img src="./breadboard.jpg" alt="Breadboard CPU" style="max-height: 360px; max-width: 320px;">
+        <img src="./breadboard.jpg" alt="Breadboard CPU" style="max-width: 500px;">
         <p> Image of the breadboard CPU. </p>
 
         <p>Expect more details, including schematics, updated here in the near future. </p>
