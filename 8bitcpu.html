@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Riley Stuermer - 8-Bit CPU</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="list-group list-group-flush">
+        <a href="./8bitcpu.html" class="list-group-item list-group-item-action bg-light">8-Bit CPU</a>
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Cirq Quantum Computing</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">RFID PCB</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">DEP PCB</a> -->
+      </div>
+      <div class="sidebar-heading"></div>
+      <div class="list-group list-group-flush">
+        <a href="./index.html" class="list-group-item list-group-item-action bg-light">About Me</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Projects</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="www.linkedin.com/in/rileystuermer">Linkedin<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="stuermer@ualberta.ca">stuermer@ualberta.ca</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" style="padding-left: 50px; padding-right: 100px">
+        <h1 class="mt-4">8-Bit CPU</h1>
+        <p>I started this project to get a deeper understanding of how computers work at as close of a level to the hardware as possible. </p>
+
+        My goals and design requirements for the project are as follows:
+        <ul>
+          <li>Only use ICs with "basic" functionality. This is subjective, but I chose to limit the ICs to include logic gates, multiplexors/demultiplexors, counters, registers, buffers, and adders. I used Texas Instruments 74HC line of ICs for this project. </li>
+          <li>Run at clock speeds of at least 1 MHz. </li>
+          <li>There must be some form of user input and output, allowing rudimentary games such as snake. </li>
+          <li>Have a PCB form factor of less then 6" by 6". This will reduce the board cost greatly compared to ven just 8" by 8". </li>
+          <li>Use as small of a number of unique parts as possible. This will allow better price breaks when purchasing. </li>
+          <li>Once assembled and control ROM programmed, the program should be fully programmable independently from an external computer (but still have the option to be programmed from an external computer). </li>
+        </ul>
+
+        <video controls width="1000">
+
+          <source src="./calc.mp4"
+                  type="video/mp4">
+      
+          Sorry, your browser doesn't support embedded videos.
+      </video>
+
+        <p>I started by designing the architecture of the CPU. The data bus would be 8-bits and the memory bus would be 16-bits. The contents of these busses could be swapped with transfer registers. Using two busses has the benefit of allowing simultaneous control of the data and memory, allowing for reduced microsteps per instruction compared to a single bus architecture. 
+          
+        <p>The ALU would take inputs from an A and B register. The operation performed between the bits of A and B are determined by using a 4to1 MUX for each bit. The selector is the nth bit of B and A, where B is the most significant selector, which selects from 4 control bits sent from the control ROM. For example if the 4 ALU control bits are 1000, then only when BA_n = 11 is the output 1, otherwise the output is 0. This makes 1000 the AND ALU control bit signal. This 8-bit MUX output will be termed the logic ALU MUX output. An additional eight 4to1 MUX are hardwired to output A based on the value of a fifth ALU control bit. This will be termed the A ALU MUX output. These two set of 8-bit MUX outputs are fed to an adder. When the A ALU MUX output is disabled (to logic 0), no addition occurs, and the result of the logic ALU MUX output is sent to the databus. If, for example, the logic ALU MUX output is set to B and the A ALU MUX output is enabled, then the adder will add A and B, outputting the result to the databus. Many other combinations are possible. This technique of using MUXs in the ALU has the advantage of allowing virtually every logic transform on A and B with much fewer ICs then if the physical gates (example: XNOR, NOT A, etc) were all included. Based on the value of the final ALU output bits, a zero, sign, and carry flag can be saved to a flag register. <p/>
+        
+        <p>Two other registers, an X and Y register, are also available for program use. A stack pointer accesses 256 bytes of RAM. </p>
+        
+        <p>An instruction register takes an 8-bit instruction to a control ROM, allowing for 256 unique instructions. Each instruction is divided into 16-microsteps with a 4-bit counter. The output control signals from the control ROM are fed into a series of DEMUX's. Doing this reduces the number of ROM chips needed by the control logic by allowing two 8-bit data ROM chips to toggle 40 control lines. If no DEMUX chips were used, then five ROM chips would be needed, which would greatly increase the board space and cost. This has the downside of requiring that certain control lines can never both be on at the same time (during the same microstep of a given instruction). I was able to split the control lines into three sets using two 4to16 DEMUX and one 3to8 DEMUX. Compared to a single 6to64 DEMUX (where no useful combination of control signals could be achieved), this three set method allows any one control signal from each set (for three control lines total) to be on at the same time. To maximize the types of instructions that can be realized, the control lines were split up carefully. It made sense to make the three sets (in general): output to databus, input from databus, and control lines related to the memory bus. This also has the safety benefit of always preventing shorts on the databus by only allowing one chip to output at a time. </p>
+
+        <!-- <p>Keyboard and head tail </p>
+
+        <p>Programming mode for the ROM and the ROM in general</p>
+
+        <p>Instruction set </p>
+
+        <p>Diode logic </p>
+
+        <p>555 clock </p>
+
+        <p>Assembly programs, plus plans</p>
+
+        <p>Ben Eater</p>
+
+        <p>PDF to PNG schematics and PCB</p>
+
+        <p>github link with fixed code documentation</p> -->
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
