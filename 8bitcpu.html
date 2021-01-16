@@ -18,7 +18,7 @@
   <style>
     video {
       position: relative;
-      width: 100%;
+      width: calc(100%-50px);
       height: 100vh; 
       background: white;
       display: block;
@@ -26,7 +26,7 @@
     }
     img {
       position: relative;
-      width: 100%;
+      width: calc(100%-50px);
       height: 100vh; 
       background: white;
       display: block;
@@ -81,8 +81,8 @@
         <h1 class="mt-4">8-Bit CPU</h1>
         <p>I started this project to gain a deeper understanding of how computers work at a level as close to the hardware as possible. </p>
 
-        <img src="./main.jpg" alt="8-Bit CPU" style="max-height: 800px; max-width: 600px; padding-left: 50px;">
-        <p style="padding-left: 50px"> Image of the completed CPU. </p>
+        <img src="./main.jpg" alt="8-Bit CPU" style="max-height: 800px; max-width: 600px;">
+        <p> Image of the completed CPU. </p>
 
         My goals and design requirements for the project were as follows:
         <ul style="padding-top: 5px">
@@ -104,22 +104,22 @@
 
         <p>I roughly based the entire instruction set on that of the 8080 microprocessor, but I designed each microstep of the instruction set from scratch to work with my hardware. I am currently working on interfacing with the keyboard and the display to print characters and play a snake game. I quickly coded a simple snake game in C using a coding style that would transfer easily to the assembly code used by my 8-Bit CPU. One simple program I have is the Fibonacci sequence, as seen below: </p>
 
-        <video style="max-height: 540px; max-width: 960px; padding-left: 50px;" controls>
+        <video style="max-height: 540px; max-width: 960px;" controls>
 
           <source src="./fib.mp4"
                   type="video/mp4">
       
           Sorry, your browser doesn't support embedded videos.
         </video>
-        <p style="padding-left: 50px;"> Example video of program calculating the Fibonacci sequence. </p>
+        <p> Example video of program calculating the Fibonacci sequence. </p>
         
 
         <p>The assembly code used to run the above program was: LD_A_byte, 0x01, LD_B_byte, 0x00, LD_X_byte, 0x01, LD_Y_byte, 0x00, PUSH_A, PUSH_B, LW, MOV_B_A, INC_AB, JNC_dble, 0x00, 0x0C, POP_B, POP_A, ADD_B, MOV_B_X, MOV_X_A, JNC_dble, 0x00, 0x08, JMP_dble, 0x00, 0x18. The program runs at 1 MHz but pauses after outputting each step of the sequence so that the output is at low enough frequencies to be visible.</p>
 
         <p>When I was first starting this project, I actually assembled the entire processor on breadboards. This used well over 150ft of wire. Although each individual module worked when tested, I ran into problems connecting all the modules into the larger computer. The connections tended to become loose within the breadboard holes and there were simply too many connections to keep track of. For this reason, I moved to PCB design earlier then anticipated. I first tried to design a board with the DIP packages I used in the breadboard. However, when routing was about 80% complete it became clear this would not be possible on a two layer board. The cost of moving to a four layer board with an 8" by 8" size was comparable to purchasing smaller packages and using a four layer board with a smaller size. I opted for the smallest available package for this line of chips, the TSSOP. This allowed me to get a board size of 125mm by 150mm on a four layer board. I was able to keep a dedicated ground layer, but some traces needed to be routed through the 5V power layer. </p>
 
-        <img src="./breadboard.jpg" alt="Breadboard CPU" style="max-height: 360px; max-width: 320px; padding-left: 50px;">
-        <p style="padding-left: 50px"> Image of the breadboard CPU. </p>
+        <img src="./breadboard.jpg" alt="Breadboard CPU" style="max-height: 360px; max-width: 320px;">
+        <p> Image of the breadboard CPU. </p>
 
         <p>Expect more details, including schematics, updated here in the near future. </p>
 
