@@ -66,7 +66,7 @@
       </div>
       <div class="sidebar-heading"></div>
       <div class="list-group list-group-flush">
-        <a href="./index.html" class="list-group-item list-group-item-action bg-light">About Me</a>
+        <a href="./index.html" class="list-group-item list-group-item-action bg-light">About</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -94,39 +94,41 @@
       </nav>
 
       <div class="container-fluid" style="padding-left: 50px; padding-right: 50px">
-        <h1 class="mt-4">8-Bit CPU</h1>
-        <p>I started this project to gain a deeper understanding of how computers work at a level as close to the hardware as possible. </p>
+        <h1 class="mt-4">Design Overview of a Low-Level 8-Bit CPU</h1>
 
+		<p></p>
         <img src="./main.jpg" alt="8-Bit CPU" style="max-width: 600px;">
-        <p> Image of the completed CPU. </p>
+		<p></p>
 
         <section>
-          <h5>My goals and design requirements for the project were as follows:</h5>
+          <h5>Design goals and requirements:</h5>
           <ul>
-            <li>Only use ICs with "basic" functionality. This is subjective, but I chose to limit the ICs to include logic gates, multiplexors/demultiplexors, counters, registers, buffers, and adders. I used Texas Instruments 74HC line of ICs for this project. </li>
-            <li>Run at clock speeds of at least 1 MHz. </li>
-            <li>Some form of user input and output, allowing rudimentary games such as snake. </li>
-            <li>Minimize the PCB size to ideally less then 6" by 6". This will reduce the board cost greatly compared to board sizes near 8" by 8". </li>
-            <li>Use as small of a number of unique parts as possible. This will allow better price breaks when purchasing components. </li>
-            <li>Once assembled and control ROM programmed, the program should be fully programmable independently from an external computer (but still have the option to be programmed from an external computer). </li>
+            <li>Only use ICs with low-level functionality (logic gates, multiplexors/demultiplexors, counters, registers, buffers, and adders), </li>
+            <li>Execute programs at clock speeds of at least 1 MHz, </li>
+            <li>User input and output, </li>
+            <li>Maximum PCB board size of 150 mm by 150 mm,  </li>
+            <li>Minimize number of unique parts to allow better price breaks, and </li>
+            <li>The program ROM should be programmable independent of an external computer (but still have the option to be programmed using an external computer). </li>
           </ul>
         </section>
-        
 
-        <p>I started by designing the architecture of the CPU. I decided to have independent data and memory busses, where the data bus would be 8-bits and the memory bus would be 16-bits. The contents of these busses could be swapped with transfer registers. Using two busses has the benefit of allowing simultaneous control of the data and memory, allowing for reduced microsteps per instruction compared to a single bus architecture. </p>
+        <p>The architecture of the CPU has independent data and memory busses, which are 8-bits and 16-bits, respectively. The contents of these busses can be swapped with transfer registers. Using two busses has the benefit over a single bus in allowing simultaneous control of the data and memory. This reduces the microsteps per instruction compared to a single bus architecture, reducing the overall computation time. </p>
+
+		<p>The schematics of the full CPU can be downloaded as a PDF <a href="./8BitCPU_Schematics.pdf">here</a>.</p>
 
         <h5>Control ROM</h5>
-        <p>An instruction register takes an 8-bit instruction to a control ROM, allowing for 256 unique instructions. Each instruction is divided into 16-microsteps using a 4-bit counter. The output control signals from the control ROM are fed into a series of DEMUXs. Doing this reduces the number of ROM chips needed by the control logic by allowing two 8-bit data ROM chips to toggle 40 control lines. These control lines are used to control when each chip outputs, latches an input, increments, etc. If no DEMUX chips were used, then five 8-bit ROM chips would be needed, which would greatly increase the board size and cost. This has the downside requirement that certain control lines can never simultaneously be on (for example, during the same microstep of a given instruction). I was able to split the control lines into three sets using two 4-to-16 DEMUXs and one 3-to-8 DEMUX. In reality, I assembled the 4-to-16 DEMUXs with multiple 3-to-8 DEMUXs. Compared to a single 6-to-64 DEMUX (where no useful combination of control signals could be achieved), this three set method allows any one control signal from each set (for three control lines total) to be on at the same time. To maximize the types of instructions that can be realized, the control lines were split up carefully. It made sense to make the three sets (in general): output to databus, input from databus, and output to the memory bus. Miscellaneous control lines were fit into the set that made the most sense. This use of control line sets has the safety benefit of always preventing shorts on the busses by guaranteeing only one chip can output at a time. </p>
+        <p>An instruction register takes an 8-bit instruction to a control ROM, allowing 256 unique instructions. Each instruction is divided into 16-microsteps using a 4-bit counter. The output control signals from the control ROM are fanned-out through a series of demultiplexors (DEMUXs). Doing this reduces the number of ROM chips needed in the control logic by allowing two 8-bit data ROM chips to toggle 40 control lines, as opposed to five with no fan-out. These control lines dictate when registers should latch an input or output their stored value, when counters should increment, and what operations are performed by the arithmetic logic unit (ALU). The downside of fanning out the control logic is that certain control lines can never simultaneously be enabled. This can be remedied by splitting the control lines into three sets using two 4-to-16 DEMUXs and one 3-to-8 DEMUX. The 4-to-16 DEMUXs was actually made from two 3-to-8 DEMUXs. Compared to a single 6-to-64 DEMUX (where no useful combination of control signals could be achieved), the three sets allow any one control signal from each set to be active simultaneously. To maximize the types of instructions that can be realized, the control lines were generally split into categories as output to databus, input from databus, and output to the memory bus. Miscellaneous control lines were fit into the sets where most practical from a programming perspective. An additional benefit of using control line sets is the safety from intrinsically preventing shorts on the busses by guaranteeing only one chip can output at a time. </p>
 
         <h5>Arithmetic Logic Unit</h5>  
-        <p>To perform various logic operations, the ALU takes inputs from an A and B register. The operation performed between the n-th bit of A and B are determined using a 4-to-1 MUX. One MUX is used for each bit pair. The MUX selector is the n-th bit of B and A, where B is the most significant selector. These selector bits choose which single bit to output from the MUX when faced with four control bits from the control ROM are used as the MUX input. For example, if the four ALU control bits are 1000, then only when the selector bits select the most significant input bit is the output 1, otherwise the output is 0. To reiterate, BA<sub>n</sub> = 11 will make the output of the n-th bit 1, while any other combination of BA<sub>n</sub> will make the output 0. This is a bitwise AND operation, making 1000 the logical AND ALU control bit signal. This 8-bit MUX output will be termed the "logic ALU MUX output". An additional eight 4-to-1 MUXs are hardwired to output A based on the value of a fifth ALU control bit. This will be termed the "A ALU MUX output". These two sets of 8-bit MUX outputs are fed to an adder. When the A ALU MUX output is disabled (to output logic 0), no addition occurs, and the result of the logic ALU MUX output is sent to the databus. If, for example, the logic ALU MUX output is set to B and the A ALU MUX output is enabled, then the adder will add A and B, outputting the result to the databus. Many other combinations are possible. This technique of using MUXs in the ALU has the advantage of allowing virtually every logic transform on A and B with much fewer ICs then if the physical gates (for example A XNOR B, NOT A, etc) were all included. The ALU design is based on the ALU in the open source Gigatron TTL computer, but I chose to implement a much larger number of logic operations into my instruction set. Based on the value of the final ALU output bits, a zero, sign, and carry flag can be saved to a flag register. <p/>
+        <p>To perform various logic operations, the ALU takes inputs from an A and B register. The operation performed between the n-th bit of A and B are determined using a 4-to-1 MUX. One MUX is used for each bit pair. The MUX selector is the n-th bit of B and A, where B is the most significant selector. These selector bits choose which single bit to output from the MUX when presented with four control bits from the control ROM. For example, if the four ALU control bits are 1000, then only when the selector bits select the most significant input bit is the output 1, otherwise the output is 0. Hence, BA<sub>n</sub> = 11 will make the output of the n-th bit 1, while any other combination of BA<sub>n</sub> will make the output 0. This is a bitwise AND operation, making 1000 the logical AND ALU control bit signal. This 8-bit MUX output can be termed the "logic ALU MUX output". An additional eight 4-to-1 MUXs are hardwired to output A based on the value of a fifth ALU control bit. This can be termed the "A ALU MUX output". These two sets of 8-bit MUX outputs are fed to an adder. When the A ALU MUX output is disabled (to output logic 0), no addition occurs, and the result of the logic ALU MUX output is sent to the databus. In comparison, if the logic ALU MUX output is set to B and the A ALU MUX output is enabled, A and B will be added with the result outputted to the databus. This ALU architecture allows virtually every logic operation to be performed on A and B with much fewer ICs then if the physical gates (i.e. A XNOR B, NOT A, etc.) were used. The ALU design is based on the ALU in the open source Gigatron TTL computer, but I chose to implement a much larger number of logic operations into my instruction set. Based on the value of the final ALU output bits, a zero, sign, and carry flag can be saved to a flag register. <p/>
 
         <h5>Other Components</h5>
-        <p>Two other registers, an X and Y register, are also available for general use. To greatly increase program complexity by allowing subroutines, a stack pointer was included which accesses 256 bytes of RAM. A keyboard is also included which triggers an interrupt that interrupt service routine shortly after any key is pressed. The interrupt service routine starts after any in-progress instruction is finished, and saves the keyboard contents as 4 bytes in RAM, with the memory location dictated by a "keyboard head pointer". A "keyboard tail pointer" can then be used to retrieve any recent keyboard presses at a time dictated by the program. An extra interrupt is included which prepares the main program ROM of the CPU to be programmed. When this interrupt is triggered, the desired set of control lines are enabled immediately.</p>
+        <p>Two other registers, an X and Y register, are also available for general use. A stack pointer was included which accesses 256 bytes of RAM, which greatly increase program complexity by allowing subroutines. A keyboard is also included which triggers an interrupt service routine shortly after any key is pressed. The interrupt service routine starts after any in-progress instruction is finished, and saves the keyboard contents as 4 bytes in RAM, with the memory location dictated by a "keyboard head pointer". A "keyboard tail pointer" can then be used to retrieve any recent keyboard presses at a time dictated by the program. An extra interrupt is included which immediately prepares the CPU in a state for the program ROM to be programmed. </p>
 
         <h5>Assembly and Instruction Set</h5>
-        <p>I roughly based the entire instruction set on that of the 8080 microprocessor, but I designed each microstep of the instruction set from scratch to work with my hardware. I am currently working on interfacing with the keyboard and the display to print characters and play a snake game. I quickly coded a simple snake game in C using a coding style that would transfer easily to the assembly code used by my 8-Bit CPU. One simple program I have is the Fibonacci sequence, as seen below: </p>
+        <p>The entire instruction set was roughly based on that of the 8080 microprocessor, but each microstep of the instruction set was designed from scratch to work most efficiently with the CPU's hardware. One simple program I wrote using the instructions is the Fibonacci sequence: </p>
 
+		<p></p>
         <video style="max-height: 540px; max-width: 960px;" controls>
 
           <source src="./fib.mp4"
@@ -134,18 +136,19 @@
       
           Sorry, your browser doesn't support embedded videos.
         </video>
-        <p> Example video of program calculating the Fibonacci sequence. </p>
-        
+		<p></p>
 
-        <p>The assembly code used to run the above program was: <code>LD_A_byte, 0x01, LD_B_byte, 0x00, LD_X_byte, 0x01, LD_Y_byte, 0x00, PUSH_A, PUSH_B, LW, MOV_B_A, INC_AB, JNC_dble, 0x00, 0x0C, POP_B, POP_A, ADD_B, MOV_B_X, MOV_X_A, JNC_dble, 0x00, 0x08, JMP_dble, 0x00, 0x18</code>. The program runs at 1 MHz but pauses after outputting each step of the sequence so that the output is at low enough frequencies to be visible.</p>
+        <p>The assembly code used to run the above program was <code>LD_A_byte, 0x01, LD_B_byte, 0x00, LD_X_byte, 0x01, LD_Y_byte, 0x00, PUSH_A, PUSH_B, LW, MOV_B_A, INC_AB, JNC_dble, 0x00, 0x0C, POP_B, POP_A, ADD_B, MOV_B_X, MOV_X_A, JNC_dble, 0x00, 0x08, JMP_dble, 0x00, 0x18</code>. The program runs at 1 MHz but pauses after outputting each step of the sequence so that the output is at low enough frequencies to be visible.</p>
 
         <h5>Breadboard</h5>
-        <p>When I was first starting this project, I actually assembled the entire processor on breadboards. This used well over 150ft of wire. Although each individual module worked when tested, I ran into problems connecting all the modules into the larger computer. The connections tended to become loose within the breadboard holes and there were simply too many connections to keep track of. For this reason, I moved to PCB design earlier then anticipated. I first tried to design a board with the DIP packages I used in the breadboard. However, when routing was about 80% complete it became clear this would not be possible on a two layer board. The cost of moving to a four layer board with an 8" by 8" size was comparable to purchasing smaller packages and using a four layer board with a smaller size. I opted for the smallest available package for this line of chips, the TSSOP. This allowed me to get a board size of 125mm by 150mm on a four layer board. I was able to keep a dedicated ground layer, but some traces needed to be routed through the 5V power layer. </p>
+        <p>This project was initially prototyped on breadboards, which required well over 50 m of wire. Although each individual module worked when tested, there were problems when connecting all modules to form the complete processor. The connections tended to become loose within the breadboard inserts. For this reason, a PCB design was necessary for further validation of the design. The small TSSOP packages used for the PCB allowed for a 125 mm by 150 mm four layer board. A dedicated ground layer and 5 V power layer were used, but some traces needed to be routed through the power layer. </p>
 
+		<p></p>
         <img src="./breadboard.jpg" alt="Breadboard CPU" style="max-width: 500px;">
-        <p> Image of the breadboard CPU. </p>
+		<p></p>
 
-        <p>Expect more details, including schematics, updated here in the near future. </p>
+		<h5>Next Steps</h5>
+		<p> I am currently working on interfacing with the keyboard and the display to print characters. This will set the stage for the creation of a simple game such as snake. I have programmed such a game in C++ using code that could be most easily represented by the instruction set of the 8-Bit CPU. </p>
 
         <!-- <p>Keyboard and head tail </p>
 
