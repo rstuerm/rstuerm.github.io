@@ -34,11 +34,11 @@
     }
 
     code {
-      font-family: Consolas,"courier new";
-      color: crimson;
-      background-color: #f1f1f1;
+      font-family: Consolas,"menlo";
+      color: rgb(0, 0, 0);
+      background-color: #f5f5f5;
       padding: 2px;
-      font-size: 105%;
+      font-size: 90%;
     }
   </style>
   
@@ -93,7 +93,7 @@
         </div>
       </nav>
 
-      <div class="container-fluid par" style="padding-left: 50px; padding-right: 50px">
+      <div class="container-fluid par" style="padding-left: 30px; padding-right: 30px">
         <h1 class="mt-4">Design Overview of a Low-Level 8-Bit CPU</h1>
 		<br>
 
@@ -168,7 +168,7 @@
 		design decisions. </p>
 		
 		<br>
-        <h5>Control ROM</h5>
+        <h5>Control Logic</h5>
 
         <p> A program is executed on a CPU by performing a series of
         instructions in an order defined by the user. Each instruction is
@@ -219,8 +219,8 @@
 		safety of preventing shorts on the busses by guaranteeing only one chip
 		can output at a time. For example, if a microinstruction which outputs
 		the A register contents to the data bus, denoted
-		<TT>AO</TT>, and a microinstruction that outputs the B register
-		contents to the data bus, denoted <TT>BO</TT> are both in the first
+		<code>AO</code>, and a microinstruction that outputs the B register
+		contents to the data bus, denoted <code>BO</code> are both in the first
 		control line set, it is physically impossible for them to be on at the
 		same time, so they will never cause a short circuit on the data bus.
 		</p>
@@ -235,62 +235,62 @@
         determined by the architecture of the CPU, in this case it is 8-bits.
         </p>
 
-		<p> One example of a unary operation is the bitwise <TT>NOT</TT>
-		operation, which converts a <TT>0</TT> to a <TT>1</TT> and a
-		<TT>1</TT> to a <TT>0</TT> for each bit of the input. For
-		example, <TT>NOT 01010101</TT> outputs
-		<TT>10101010</TT>. An example of a binary operation is the bitwise
-		<TT>AND</TT> operation, which will return an output bit of
-		<TT>1</TT> if the corresponding bits from each input is
-		<TT>1</TT>, and return an output bit of
-		<TT>0</TT> otherwise. For example, <TT>01010101 AND
-		00001111</TT> outputs <TT>00000101</TT>. Another binary operation
+		<p> One example of a unary operation is the bitwise <code>NOT</code>
+		operation, which converts a <code>0</code> to a <code>1</code> and a
+		<code>1</code> to a <code>0</code> for each bit of the input. For
+		example, <code>NOT 01010101</code> outputs
+		<code>10101010</code>. An example of a binary operation is the bitwise
+		<code>AND</code> operation, which will return an output bit of
+		<code>1</code> if the corresponding bits from each input is
+		<code>1</code>, and return an output bit of
+		<code>0</code> otherwise. For example, <code>01010101 AND
+		00001111</code> outputs <code>00000101</code>. Another binary operation
 		is addition, where two numbers are added together to get a resulting
 		output. In case of overflow of the result beyond 8-bits (i.e. addition
 		results in a number greater than 255), a carry flag is set. Flags such
 		as this carry flag can be used to allow the computer to make decisions
-		based on certain conditions, much like an <TT>if</TT> statement in
+		based on certain conditions, much like an <code>if</code> statement in
 		high-level programming languages. </p>
 				
 		<p> To perform various logic operations, the arithmetic logic unit (ALU)
 		in this CPU takes the contents of A and B registers as the two inputs,
-		denoted <TT>A</TT> and <TT>B</TT>, respectively. In my design,
-		the operation performed between the <i>n</i>-th bit of <TT>A</TT> and
-		<TT>B</TT> is determined using a 4-to-1 multiplexor (MUX). One MUX
+		denoted <code>A</code> and <code>B</code>, respectively. In my design,
+		the operation performed between the <i>n</i>-th bit of <code>A</code> and
+		<code>B</code> is determined using a 4-to-1 multiplexor (MUX). One MUX
 		is used for each output bit. The MUX selector for the <i>n</i>-th bit was
-		chosen as the two bit value coming <i>n</i>-th bit of <TT>B</TT> and
-		<TT>A</TT>, where <TT>B</TT> is the most significant selector.
-		This MUX selector is therefore denoted <TT>BA<sub>n</sub></TT>.
+		chosen as the two bit value coming <i>n</i>-th bit of <code>B</code> and
+		<code>A</code>, where <code>B</code> is the most significant selector.
+		This MUX selector is therefore denoted <code>BA<sub>n</sub></code>.
 		These selector bits choose which one bit to output from the MUX when
 		presented with four input bit options. ALU control signals from the ROM are
 		used as the input bits. Different combinations of these ALU control
 		signals will effectively perform different operations on the <i>n</i>-th bit of
-		<TT>A</TT> and <TT>B</TT>. For example, if the four ALU control
-		signals are <TT>1000</TT>, then only when the selector bits choose
-		to output the most significant input bit is the output <TT>1</TT>,
-		otherwise the output is <TT>0</TT>. Hence, <TT>BA<sub>n</sub> =
-		11</TT> will make the output of the <i>n</i>-th bit	<TT>1</TT>, while
-		the other options <TT>BA<sub>n</sub> = 00, 01, 10</TT> will
-		make the output <TT>0</TT>. This makes <TT>1000</TT> the ALU
-		control signal for the bitwise <TT>AND</TT> operation. As another
-		example, the ALU control signal <TT>1110</TT> is for the bitwise
-		<TT>OR</TT> operation. The desired ALU control signals are supplied to
+		<code>A</code> and <code>B</code>. For example, if the four ALU control
+		signals are <code>1000</code>, then only when the selector bits choose
+		to output the most significant input bit is the output <code>1</code>,
+		otherwise the output is <code>0</code>. Hence, <code>BA<sub>n</sub> =
+		11</code> will make the output of the <i>n</i>-th bit	<code>1</code>, while
+		the other options <code>BA<sub>n</sub> = 00, 01, 10</code> will
+		make the output <code>0</code>. This makes <code>1000</code> the ALU
+		control signal for the bitwise <code>AND</code> operation. As another
+		example, the ALU control signal <code>1110</code> is for the bitwise
+		<code>OR</code> operation. The desired ALU control signals are supplied to
 		each of the eight MUXs to complete the operation on all eight bits
 		simultaneously. This 8-bit MUX output can be termed the
 		logic-ALU-MUX-output. </p>
 		
 		<p> An additional eight 4-to-1 MUXs are hardwired to output either
-		<TT>A</TT> or <TT>00000000</TT> based on the value of a fifth ALU
+		<code>A</code> or <code>00000000</code> based on the value of a fifth ALU
 		control signal. This 8-bit MUX output can be termed the
 		A-ALU-MUX-output. These two 8-bit MUX outputs are fed to an adder. When
-		the A ALU MUX output is disabled (set to output <TT>00000000</TT>), no
+		the A ALU MUX output is disabled (set to output <code>00000000</code>), no
 		addition occurs, and the result of the logic-ALU-MUX-output is sent to
 		the data bus. In comparison, if the logic-ALU-MUX-output is set to, for
-		example, <TT>B</TT>, and the A-ALU-MUX-output is enabled (set to output
-		<TT>A</TT>), the addition <TT>A+B</TT> will occur and will be outputted
+		example, <code>B</code>, and the A-ALU-MUX-output is enabled (set to output
+		<code>A</code>), the addition <code>A+B</code> will occur and will be outputted
 		to the data bus. This ALU architecture allows virtually every logic
 		operation to be performed on the A and B registers with vastly fewer ICs
-		then if the physical gates (i.e. <TT> A AND B</TT>, <TT>NOT A</TT>,
+		then if the physical gates (i.e. <code> A AND B</code>, <code>NOT A</code>,
 		etc.) were all implemented with logic gates. This ALU design is based on
 		that of the open source Gigatron TTL computer, but I chose to implement
 		a larger number of logic operations into my instruction set. Based on
@@ -336,49 +336,51 @@
 		<br>
 
         <p>The assembly code used to run the Fibonacci sequence program was made
-        of the following list of instructions: <TT>LD_A_byte, 0x01, LD_B_byte,
+        of the following list of instructions: <code>LD_A_byte, 0x01, LD_B_byte,
         0x00, LD_X_byte, 0x01, LD_Y_byte, 0x00, PUSH_A, PUSH_B, LW, MOV_B_A,
         INC_AB, JNC_dble, 0x00, 0x0C, POP_B, POP_A, ADD_B, MOV_B_X, MOV_X_A,
-        JNC_dble, 0x00, 0x08, JMP_dble, 0x00, 0x18</TT>.</p>
+        JNC_dble, 0x00, 0x08, JMP_dble, 0x00, 0x18</code>.</p>
 		
 		<p> Analyzing this code, first the A, B, X, and Y registers are
 		initialized with
-        <TT>1, 0, 1</TT> and <TT>0</TT>, respectively. Note that the result of
-        each step of the Fibonacci sequence is presented in the X register, with
-        the initial value being <TT>1</TT>. Next, the values of
-        <TT>A</TT> and <TT>B</TT> are pushed to the stack pointer so they can be
+        <code>1</code>, <code>0</code>, <code>1</code>, and <code>0</code>,
+        respectively. Note that the result of each step of the Fibonacci
+        sequence is presented in the X register, with the initial value being
+        <code>1</code>. Next, the values of
+        <code>A</code> and <code>B</code> are pushed to the stack pointer so they can be
         recalled in the future after running a subroutine. THe subroutine is a
         delay which controls how often to output each step of the Fibonacci
         sequence results. This is necessary because otherwise the 1 MHz clock
-        would output the results too quick to see. To create this delay, <TT>A</TT> is loaded
-        with <TT>0</TT> using the <TT>LW</TT> microinstruction before copying
-        the contents of <TT>A</TT> to <TT>B</TT> (this is another method to
+        would output the results too quick to see. To create this delay, <code>A</code> is loaded
+        with <code>0</code> using the <code>LW</code> microinstruction before copying
+        the contents of <code>A</code> to <code>B</code> (this is another method to
         initialize the A and B registers). Next, the 16-bit combination of
-        <TT>A</TT> and <TT>B</TT> is incremented by <TT>1</TT>. After
+        <code>A</code> and <code>B</code> is incremented by <code>1</code>. After
         incrementing, it is tested if the carry flag is active which would occur
         when the overflow occurs from addition. If there is not a carry flag,
-        the program jumps back to the <TT>INC_AB</TT> instruction for additional
+        the program jumps back to the <code>INC_AB</code> instruction for additional
         incrementing. This cycle continues until overflow actually occurs, which
         is after 2<sup>16</sup> increments, which was a sufficient delay. After
         this pause, the actual computation of the current step of the Fibonacci
-        sequence can occur. The values of <TT>A</TT> and <TT>B</TT>
-        are restored from the stack, and <TT>B</TT> is added to
-        <TT>A</TT>, with the result stored back in <TT>A</TT>. Next,
-        <TT>X</TT> is moved to <TT>B</TT> and <TT>A</TT> is moved to
-        <TT>X</TT>. The program then jumps back to the <TT>PUSH_A</TT>
+        sequence can occur. The values of <code>A</code> and <code>B</code>
+        are restored from the stack, and <code>B</code> is added to
+        <code>A</code>, with the result stored back in <code>A</code>. Next,
+        <code>X</code> is moved to <code>B</code> and <code>A</code> is moved to
+        <code>X</code>. The program then jumps back to the <code>PUSH_A</code>
         instruction to restart the timer delay before computing the next step of
         the sequence. This delay-computation loop continues until the Fibonacci
         sequence value maxes out the 8-bit space it is stored in (as signified
         by a carry flag from overflow of addition). When overflow occurs the
         delay-computation loop is ended with another jump-if-not-carry
-        instruction. Finally, the program calls <TT>JMP_dble</TT> which is
+        instruction. Finally, the program calls <code>JMP_dble</code> which is
         instructed to jump back to itself, creating an infinite loop of the last
         three instructions. This serves as an end to the program.</p>
 		
 		<p> In the video, the LEDs for the X register (section of LEDs third
-		from the left in the upper half of the PCB) shows an output of <TT>
-		00000001, 00000001, 00000010, 00000011, 00000101, ... </TT> which is
-		binary for <TT> 1, 1, 2, 3, 5, ... </TT>, i.e. the Fibonacci sequence.
+		from the left in the upper half of the PCB) shows an output of
+		<code>00000001, 00000001, 00000010, 00000011, 00000101, ...</code>, which
+		is binary for <code>1, 1, 2, 3, 5, ...</code>, i.e. the Fibonacci
+		sequence.
 		</p>
 
 		<!-- Each instruction is divided into 16-microsteps using a 4-bit
