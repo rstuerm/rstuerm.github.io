@@ -95,10 +95,12 @@
 
       <div class="container-fluid par" style="padding-left: 50px; padding-right: 50px">
         <h1 class="mt-4">Design Overview of a Low-Level 8-Bit CPU</h1>
+		<br>
 
         <img src="./8BitCPU.jpg" alt="8-Bit CPU" class="center" style="max-width: 600px;">
 		<br>
 
+		<br>
         <section>
           <h5>Design goals and requirements:</h5>
           <ul>
@@ -135,6 +137,7 @@
 			<iframe class="responsive-iframe" src="https://drive.google.com/file/d/1DsDOuCJiCIWlAqNf4KkfU5qK5aVvfR5x/preview"></iframe>
 		</div>
 		<br>
+		<br>
 
 		<p> In addition, a PDF of the PCB is available <a
 		href="./8BitCPU_PCB.pdf">here</a>, and is embedded below. </p>
@@ -142,6 +145,7 @@
 		<div class="container">
 			<iframe class="responsive-iframe" src="https://drive.google.com/file/d/1KYAlWc5BjrTV7YhNNT3KVdGsE_nK0YZr/preview"></iframe>
 		</div>
+		<br>
 		<br>
 	
 		<p> With the described architecture I was able to meet all of the
@@ -163,7 +167,9 @@
 		the design to try and explain the reasoning behind different
 		design decisions. </p>
 		
+		<br>
         <h5>Control ROM</h5>
+
         <p> A program is executed on a CPU by performing a series of
         instructions in an order defined by the user. Each instruction is
         associated with a number, which tells the control logic which commands
@@ -219,6 +225,7 @@
 		same time, so they will never cause a short circuit on the data bus.
 		</p>
 
+		<br>
         <h5> Arithmetic Logic Unit</h5>  
 
         <p> One key characteristic of a CPU is its ability to perform logical
@@ -289,8 +296,10 @@
 		a larger number of logic operations into my instruction set. Based on
 		the value of the final ALU output bits, a zero, sign, and carry flag can
 		be saved to a flag register. <p/>
-
+		
+		<br>
         <h5>Other Components</h5>
+
         <p>Two other registers, an X and Y register, are also available for
         general use. A stack pointer was included which accesses 256 bytes of
         RAM, which can greatly increase the complexity of the program that can
@@ -306,7 +315,9 @@
         is included which immediately prepares the CPU in a state for the
         program ROM to be programmed. </p>
 
+		<br>
         <h5>Assembly and Instruction Set</h5>
+
         <p>The instruction set used by this CPU is composed of 142 instructions
         and is roughly based on that of the 8080 microprocessor. However, each
         microstep of the instruction set was designed from scratch to work most
@@ -374,7 +385,9 @@
 		counter. For any instruction, each microstep is associated with a
 		microinstruction which is composed of  -->
 
+		<br>
         <h5>Physical Design</h5>
+
         <p>This project was initially prototyped on breadboards, which required
         well over 50 m of wire. Although each individual module worked when
         tested, there were problems when connecting all modules to form the
@@ -395,7 +408,9 @@
         <img src="./8BitCPU_PCB.png" alt="PCB CPU" class="center" style="max-width: 500px;">
 		<br>
 	
+		<br>
 		<h5>Test Process</h5>
+
 		<p> While designing this project there were many opportunities for error
 		due to the total component count exceeding 500, and 142 instructions
 		made up of up to 16 different microsteps each. Troubleshooting with an
@@ -432,7 +447,9 @@
 		student discount, I would recommend this piece of test equipment to
 		other students. </p>
 
+		<br>
 		<h5>Next Steps</h5>
+
 		<p> I am currently working on interfacing with the keyboard and the
 		display to print characters. This will set the stage for the creation of
 		a simple game such as snake. I have programmed such a game in C++ using
