@@ -142,68 +142,130 @@
 		number of unique parts is 26, 11 of which are ICs of the specified
 		variety; a program was executed using a 1 MHz clock; there is a keyboard
 		and digital pins for input and there are LEDs, LCDs and digital pins for
-		output; the board size is 125 mm by 150 mm; programs can be programmed
-		into the ROM using DIP switches. </p>
+		output; the board size is 125 mm by 150 mm; finally, programs can be
+		programmed into the ROM using DIP switches. </p>
 
 		<p> The full PCB source files can be found on my <a
 		href="https://github.com/rstuerm/8BitCPU">GitHub</a>, which will later
 		be updated to include the microcontroller code used to program both the
 		control ROM and program ROM, as well as the definition of the
 		instruction set and how it relates to the control ROM.</p>
+
+		<p> The remainder of this document will highlight a couple aspects of
+		the design to try and explain the reasoning behind different
+		design decisions. </p>
 		
         <h5>Control ROM</h5>
-        <p>An instruction register takes an 8-bit instruction to a control ROM,
-        allowing 256 unique instructions. Each instruction is divided into
-        16-microsteps using a 4-bit counter. The output control signals from the
-        control ROM are fanned-out through a series of demultiplexors (DEMUXs).
-        Doing this reduces the number of ROM chips needed in the control logic
-        by allowing two 8-bit data ROM chips to toggle 40 control lines, as
-        opposed to five with no fan-out. These control lines dictate when
-        registers should latch an input or output their stored value, when
-        counters should increment, and what operations are performed by the
-        arithmetic logic unit (ALU). The downside of fanning out the control
-        logic is that certain control lines can never simultaneously be enabled.
-        This can be remedied by splitting the control lines into three sets
-        using two 4-to-16 DEMUXs and one 3-to-8 DEMUX. The 4-to-16 DEMUXs was
-        actually made from two 3-to-8 DEMUXs. Compared to a single 6-to-64 DEMUX
-        (where no useful combination of control signals could be achieved), the
-        three sets allow any one control signal from each set to be active
-        simultaneously. To maximize the types of instructions that can be
-        realized, the control lines were generally split into categories as
-        output to databus, input from databus, and output to the memory bus.
-        Miscellaneous control lines were fit into the sets where most practical
-        from a programming perspective. An additional benefit of using control
-        line sets is the safety from intrinsically preventing shorts on the
-        busses by guaranteeing only one chip can output at a time. </p>
+        <p> A program is executed on a CPU by performing a series of
+        instructions in an order defined by the user. Each instruction is
+        associated with a number, which tells the control logic which commands
+        to send to the rest of the CPU. Choosing the instruction number to be an
+        8-bit number allows 256 unique instructions to be defined. The commands
+        are sent to the rest of the CPU through the toggling of various control
+        signals, ultimately dictating for example when registers should store a
+        value, when counters should increment, or what operations are performed
+        by the arithmetic logic unit (ALU). These small scale operations compose
+        instructions, and are hence termed microinstructions. </p>
+		
+		<p> A ROM chip can be used to map the instructions (and flags,
+		interrupts, and microstep number) to the desired control line signal
+		combination. For example if the chosen ROM chip stores 8-bits of data at
+		each address location, each output bit could be used for a control line.
+		Hence, 40 control liens would require five 8-bit ROM chips. This is
+		quite a lot of hardware, so instead the ROM output bits can be
+		fanned-out through a series of demultiplexors (DEMUXs). Then each DEMUX
+		output bit can make up one control line. If
+		the control lines were fanned out to a maximum extent, a 6-to-64 DEMUX
+		would be needed to control all 40 control lines (a 5-to-32 DEMUX would
+		be eight output bits short). This would minimize the number of hardware ICs
+		required. Only one 8-bit ROM chip would be needed to control the 6 DEMUX
+		inputs. The downside of fanning out the control logic is that certain
+		control lines can never simultaneously be enabled. To perform certain
+		operations some control lines must be active simultaneously. This can be
+		remedied by splitting the control lines into multiple sets. Using sets
+		allows any one control signal from each set to be active simultaneously.
+		The more sets desired, the more hardware needed. </p>
+		
+		<p> Considering this tradeoff of the extent of the fan-out, my design
+		uses three sets to achieve 40 control signals. These sets are comprised
+		of two 4-to-16 DEMUXs and one 3-to-8 DEMUX. This results in a total of
+		three control signals that can be active at once. This requires two
+		8-bit ROM chips to give the 4 + 4 + 3 = 11 DEMUX inputs. To maximize the
+		types of instructions that can be achieved, the control lines were split
+		into categories which were in general: output to data bus, input from
+		data bus, and output to the memory bus. Miscellaneous control lines were
+		fit into the most practical set. An additional benefit of using sets of
+		control lines is the intrinsic safety of preventing shorts on the busses
+		by guaranteeing only one chip can output at a time. For example, if a
+		microinstruction which outputs the A register to the data bus, denoted
+		<code>AO</code>, and a microinstruction that outputs the B register to
+		the data bus, denoted <code>BO</code> are both in the first control line
+		set, they can never be on at the same time, so they will never cause a
+		short circuit on the data bus.
+		</p>
 
-        <h5>Arithmetic Logic Unit</h5>  
-        <p>To perform various logic operations, the ALU takes inputs from an A
-        and B register. The operation performed between the n-th bit of A and B
-        are determined using a 4-to-1 MUX. One MUX is used for each bit pair.
-        The MUX selector is the n-th bit of B and A, where B is the most
-        significant selector. These selector bits choose which single bit to
-        output from the MUX when presented with four control bits from the
-        control ROM. For example, if the four ALU control bits are 1000, then
-        only when the selector bits select the most significant input bit is the
-        output 1, otherwise the output is 0. Hence, BA<sub>n</sub> = 11 will
-        make the output of the n-th bit 1, while any other combination of
-        BA<sub>n</sub> will make the output 0. This is a bitwise AND operation,
-        making 1000 the logical AND ALU control bit signal. This 8-bit MUX
-        output can be termed the "logic ALU MUX output". An additional eight
-        4-to-1 MUXs are hardwired to output A based on the value of a fifth ALU
-        control bit. This can be termed the "A ALU MUX output". These two sets
-        of 8-bit MUX outputs are fed to an adder. When the A ALU MUX output is
-        disabled (to output logic 0), no addition occurs, and the result of the
-        logic ALU MUX output is sent to the databus. In comparison, if the logic
-        ALU MUX output is set to B and the A ALU MUX output is enabled, A and B
-        will be added with the result outputted to the databus. This ALU
-        architecture allows virtually every logic operation to be performed on A
-        and B with much fewer ICs then if the physical gates (i.e. A XNOR B, NOT
-        A, etc.) were used. The ALU design is based on the ALU in the open
-        source Gigatron TTL computer, but I chose to implement a much larger
-        number of logic operations into my instruction set. Based on the value
-        of the final ALU output bits, a zero, sign, and carry flag can be saved
-        to a flag register. <p/>
+        <h5> Arithmetic Logic Unit</h5>  
+
+        <p> One key characteristic of a CPU is its ability to perform logical
+        operations. Such operations could involve one input, termed a unary
+        operation, or two inputs, termed a binary operation. In either case, a
+        single output is the result. The number of bits per input or output is
+        determined by the architecture of the CPU, in this case it is 8-bits.
+        </p>
+
+		<p> One example of a unary operation is the bitwise <code>NOT</code>
+		operation, which converts a <code>0</code> to a <code>1</code> or a
+		<code>1</code> to a <code>0</code> for each bit of the input. An example
+		of a binary operation is the bitwise <code>AND</code> operation, which
+		will return an output bit of <code>1</code> if the corresponding bits
+		from each input is <code>1</code>, and return an output bit of
+		<code>0</code> otherwise. Another binary operation is addition, where
+		two numbers are added together to get a resulting output. In case of
+		overflow of a result beyond 8-bits, a carry flag is included. </p>
+				
+		<p> To perform various logic operations, the ALU takes the A and B
+		registers as the two inputs. The operation performed between the n-th
+		bit of <code>A</code> and <code>B</code> are determined using a 4-to-1
+		multiplexor (MUX). One MUX is used for each output bit. The MUX selector
+		for th n-th bit is the two bit value coming n-th bit of <code>B</code>
+		and <code>A</code>, where <code>B</code>
+		is the most significant selector. This MUX selector is therefore denoted
+		<code>BA<sub>n</sub></code>. These selector bits choose which single bit
+		to output from the MUX when presented with four input bits. ALU control
+		signals from the ROM are used as the input bits. Different combinations
+		of these ALU control signals will effectively perform different
+		operations on the n-th bit of <code>A</code> and <code>B</code>. For
+		example, if the four ALU control signals are
+		<code>1000</code>, then only when the selector bits choose to output the
+		most significant input bit is the output <code>1</code>, otherwise the
+		output is <code>0</code>. Hence, <code>BA<sub>n</sub> = 11</code> will
+		make the output of the n-th bit	<code>1</code>, while any other
+		combination of <code>BA<sub>n</sub> = 00, 01, 10</code>, will make the
+		output <code>0</code>. This makes <code>1000</code> the ALU control
+		signal for the bitwise <code>AND</code> operation. As another example
+		the ALU control signal <code>1110</code> is for the bitwise
+		<code>OR</code> operation. The desired ALU control signals are supplied
+		to each of the eight MUXs to complete the operation on all eight bits
+		simultaneously. This 8-bit MUX output can be termed the "logic ALU MUX
+		output". </p>
+		
+		<p> An additional eight 4-to-1 MUXs are hardwired to output either
+		<code>A</code> or <code>00000000</code> based on the value of a fifth
+		ALU control signal. This 8-bit MUX output can be termed the "A ALU MUX
+		output". These two 8-bit MUX outputs are fed to an adder. When the A ALU
+		MUX output is disabled (set to output <code>00000000</code>), no
+		addition occurs, and the result of the logic ALU MUX output is sent to
+		the data bus. In comparison, if the logic ALU MUX output is set to, for
+		example, <code>B</code> and the A ALU MUX output is enabled (set to
+		output <code>A</code>), the addition <code>A+B</code> will occur and
+		will be outputted to the data bus. This ALU architecture allows
+		virtually every logic operation to be performed on the A and B registers
+		with vastly fewer ICs then if the physical gates (i.e. <code> A AND
+		B</code>, <code>NOT A</code>, etc.) were all implemented with logic
+		gates. This ALU design is based on that of the open source Gigatron TTL
+		computer, but I chose to implement a larger number of logic operations
+		into my instruction set. Based on the value of the final ALU output
+		bits, a zero, sign, and carry flag can be saved to a flag register. <p/>
 
         <h5>Other Components</h5>
         <p>Two other registers, an X and Y register, are also available for
@@ -219,10 +281,11 @@
         state for the program ROM to be programmed. </p>
 
         <h5>Assembly and Instruction Set</h5>
-        <p>The entire instruction set was roughly based on that of the 8080
-        microprocessor, but each microstep of the instruction set was designed
-        from scratch to work most efficiently with the CPU's hardware. One
-        simple program I wrote using the instructions is the Fibonacci sequence:
+        <p>The instruction set is composed of 142 instructions and is roughly
+        based on that of the 8080 microprocessor. However, each microinstruction
+        of the instruction set was designed from scratch to work most
+        efficiently with the CPU's hardware. One simple program I wrote using
+        the instructions is the Fibonacci sequence:
         </p>
 
         <video style="max-height: 540px; max-width: 960px;" controls>
@@ -234,18 +297,51 @@
         </video>
 		<br>
 
-        <p>The assembly code used to run the above program was <code>LD_A_byte,
-        0x01, LD_B_byte, 0x00, LD_X_byte, 0x01, LD_Y_byte, 0x00, PUSH_A, PUSH_B,
-        LW, MOV_B_A, INC_AB, JNC_dble, 0x00, 0x0C, POP_B, POP_A, ADD_B, MOV_B_X,
-        MOV_X_A, JNC_dble, 0x00, 0x08, JMP_dble, 0x00, 0x18</code>. The program
-        runs at 1 MHz but pauses after outputting each step of the sequence so
-        that the output is at low enough frequencies to be visible. The output
-        is seen on the X register (section of LEDs third from the left, in the
-        upper half of the board). Monitoring the output to this register shows
-        the LEDs count <code> 00000001, 00000001, 00000010, 00000011, 00000101,
-        ... </code>
-        which is binary for <code> 1, 1, 2, 3, 5, ... </code>, i.e. the
-        Fibonacci sequence. </p>
+        <p>The assembly code used to run the above program was made of the
+        following list of instructions: <code>LD_A_byte, 0x01, LD_B_byte, 0x00,
+        LD_X_byte, 0x01, LD_Y_byte, 0x00, PUSH_A, PUSH_B, LW, MOV_B_A, INC_AB,
+        JNC_dble, 0x00, 0x0C, POP_B, POP_A, ADD_B, MOV_B_X, MOV_X_A, JNC_dble,
+        0x00, 0x08, JMP_dble, 0x00, 0x18</code>.</p>
+		
+		<p> Analyzing this code, first the A, B, X, and Y registers are
+		initialized with
+        <code>1, 0, 1</code> and <code>0</code>, respectively. <code>X</code> is
+        where the output of the Fibonacci sequence is presented, which starts at
+        <code>1</code>. Next the value of
+        <code>A</code> and <code>B</code> are pushed to the stack pointer to
+        later recall. Now a timer is started which will control how often to
+        output the Fibonacci results, otherwise the 1 MHz clock would output
+        results too quick to see. To do this <code>A</code> is loaded with
+        <code>0</code> using the <code>LW</code> microinstruction before copying
+        the contents of <code>A</code> to <code>B</code> (this is another method
+        to initialize the A and B registers). Now the 16-bit combination of
+        <code>A</code> and <code>B</code> is incremented by <code>1</code>. Now
+        it is tested if the carry flag is active which would occur when the
+        overflow occurs from addition. If there is not a carry flag, the program
+        jumps back to the <code>INC_AB</code> instruction. This cycle continues
+        until overflow actually occurs, in which case enough delay has been
+        added. After this pause, the actual computation of the step of the
+        sequence can occur. The values of <code>A</code> and <code>B</code>
+        are restored from the stack, and <code>B</code> is added to
+        <code>A</code> (and the result is stored in <code>A</code>).
+        <code>X</code> is moved to <code>B</code> and <code>A</code> is moved to
+        <code>X</code>. The program then jumps back to the <code>PUSH_A</code>
+        instruction to restart the timer delay before computing the next step of
+        the sequence. This delay-computation loop continues until the Fibonacci
+        sequence value maxes out the 8-bit space it is stored in (as signified
+        by a carry flag from overflow of addition). At this point the
+        delay-computation loop is ended. Finally, the program calls
+        <code>JMP_dble</code> which jumps back to itself creating an infinite
+        loop. This serves as an end to the program.</p>
+		
+		<p> The LEDs for the X register (section of LEDs third from the left in the
+		upper half of the PCB) shows an output of <code> 00000001, 00000001,
+		00000010, 00000011, 00000101, ... </code> which is binary for <code> 1,
+		1, 2, 3, 5, ... </code>, i.e. the Fibonacci sequence. </p>
+
+		<!-- Each instruction is divided into 16-microsteps using a 4-bit
+		counter. For any instruction, each microstep is associated with a
+		microinstruction which is composed of  -->
 
         <h5>Physical Design</h5>
         <p>This project was initially prototyped on breadboards, which required
