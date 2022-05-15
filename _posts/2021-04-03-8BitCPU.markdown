@@ -5,6 +5,7 @@ date:   2021-04-03 13:04:54 -0600
 categories:
 image: /assets/8BitCPU/8BitCPU.jpg
 ---
+<meta name="format-detection" content="telephone=no">
 
 &nbsp;
 
@@ -34,13 +35,18 @@ Ben Eater.
 The schematic of the full CPU can be downloaded as a PDF [here][schematic], and
 is embedded below.
 
-<object data="{{ site.url }}{{ site.baseurl }}/assets/8BitCPU/8BitCPU_Schematic.pdf" width="100%" height="550px" class="image" type="application/pdf"></object>
+
+<div class="container">
+	<iframe class="responsive-iframe" src="https://drive.google.com/file/d/1DsDOuCJiCIWlAqNf4KkfU5qK5aVvfR5x/preview"></iframe>
+</div>
 
 &nbsp;
 
 In addition, a PDF of the PCB is available [here][PCB], and is embedded below.
 
-<object data="{{ site.url }}{{ site.baseurl }}/assets/8BitCPU/8BitCPU_PCB.pdf" width="100%" height="550px" class="image" type="application/pdf"></object>
+<div class="container">
+	<iframe class="responsive-iframe" src="https://drive.google.com/file/d/1KYAlWc5BjrTV7YhNNT3KVdGsE_nK0YZr/preview"></iframe>
+</div>
 
 &nbsp;
 
