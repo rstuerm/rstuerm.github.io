@@ -34,10 +34,13 @@ Ben Eater.
 The schematic of the full CPU can be downloaded as a PDF [here][schematic], and
 is embedded below.
 
+<object data="{{ site.url }}{{ site.baseurl }}/assets/8BitCPU/8BitCPU_Schematic.pdf" width="100%" height="550px" class="image" type="application/pdf"></object>
+
 &nbsp;
 
 In addition, a PDF of the PCB is available [here][PCB], and is embedded below.
 
+<object data="{{ site.url }}{{ site.baseurl }}/assets/8BitCPU/8BitCPU_PCB.pdf" width="100%" height="550px" class="image" type="application/pdf"></object>
 
 &nbsp;
 
@@ -187,6 +190,10 @@ CPU's hardware. One simple program I wrote using the instructions is the
 Fibonacci sequence, which is shown in the following video:
 
 
+<video width="100%" controls="controls">
+  <source src="/assets/8BitCPU/8BitCPU_Fib.mp4" type="video/mp4">
+</video>
+
 The assembly code used to run the Fibonacci sequence program was made of the
 following list of instructions: `LD_A_byte, 0x01, LD_B_byte, 0x00, LD_X_byte,
 0x01, LD_Y_byte, 0x00, PUSH_A, PUSH_B, LW, MOV_B_A, INC_AB, JNC_dble, 0x00,
@@ -238,10 +245,13 @@ a $125 \; \rm{mm}$ by $150 \; \rm{mm}$ four layer board. A dedicated ground
 layer and $5 \; \rm{V}$ power layer were used, but some traces needed to be
 routed through the power layer.
 
+<img src="/assets/8BitCPU/8BitCPU_Breadboard.jpg" alt="" width="65%" class="image"/>
 
 I completed the first iteration of the PCB design in Altium; however, I have
 since transitioned to KiCad due to it being open-source and cross-platform,
 which has produced nice results:
+
+<img src="/assets/8BitCPU/8BitCPU_PCB.png" alt="" width="65%" class="image"/>
 
 # Test Process
 
@@ -262,8 +272,12 @@ busses while running a program. An example of the debugging process is shown
 below, where a the contents of the data bus were captured during execution of
 the Fibonacci sequence program.
 
+<img src="/assets/8BitCPU/8BitCPU_Debug.jpg" alt="" width="65%" class="image"/>
+
 A screenshot of the waveforms of the bus while running the Fibonacci sequence is
 shown below:
+
+<img src="/assets/8BitCPU/8BitCPU_Waveform.png" alt="" width="65%" class="image"/>
 
 One of my favorite things about the Saleae logic analyzer is its ease of use. It
 can be plugged into any computer (okay, maybe not an 8-bit CPU!) since the
