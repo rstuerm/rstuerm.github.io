@@ -16,7 +16,9 @@ layout: default
   </header>
 
   {%- if page.image -%}
-	<img src="{{- page.image | relative_url -}}" alt="" class="cover-image">
+    <div class="cover-container">
+      <img src="{{- page.image | relative_url -}}" alt="" class="">
+    </div>
   {%- endif -%}
 
   <div class="post-content e-content" itemprop="articleBody">
