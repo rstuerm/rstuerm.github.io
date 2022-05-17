@@ -196,7 +196,7 @@ CPU's hardware. One simple program I wrote using the instructions is the
 Fibonacci sequence, which is shown in the following video:
 
 
-<video width="100%" controls="controls">
+<video width="100%" controls="controls" poster="/assets/8BitCPU/8BitCPU_Fib_Poster.tiff">
   <source src="/assets/8BitCPU/8BitCPU_Fib.mp4" type="video/mp4">
 </video>
 
