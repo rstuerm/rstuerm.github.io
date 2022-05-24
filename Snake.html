@@ -304,24 +304,7 @@
       //     }, 1000);
       //   }
       // }
-
-      (function()
-      {
-        if( window.localStorage )
-        {
-          if( !localStorage.getItem('firstLoad') )
-          {
-            localStorage['firstLoad'] = true;
-            setTimeout(function() {
-            window.location.reload();
-          }, 1000);
-          }  
-          else
-            localStorage.removeItem('firstLoad');
-        }
-      })();
-
-
+      
     </script>
     <script async type="text/javascript" src="assets/SnakeGame/Snake.js"></script>
   </body>
