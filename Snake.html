@@ -17,16 +17,17 @@
         border: none;
       } 
 
+      html,body{overflow-x: hidden;}
+      
       body {
         text-align: center;
-        overflow-x: hidden !important;
       }
 
       .controls {
         margin-left: auto;
         margin-right: auto;
         position: relative;
-        width: 22%; /* The size you want */
+        width: 20%; /* The size you want */
         margin-top: 4px;
         margin-bottom: 4px;
         margin-left: 2px;
@@ -122,13 +123,10 @@
     </style>
   </head>
   <body>
-    <meta name="viewport" 
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
     <div>
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
     </div>
-    
     
     <div class="mobileShow">
       <button
