@@ -6,13 +6,6 @@
     <title>Snake Game</title>
     <style>
 
-      .controls {
-        height: 10em;
-        width: 10em;
-        margin-bottom: 8px;
-        margin-left: 2px;
-        margin-right: 2px;
-      }
       button:active{background-color:rgb(120, 120, 120);}
 
       button {
@@ -25,18 +18,52 @@
       } 
 
       body {
-        font-family: arial;
-        margin: 0;
-        padding: none;
+        text-align: center;
+        overflow-x: hidden !important;
       }
 
-      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
-      div.emscripten { text-align: center; }      
-      div.emscripten_border { border: 0px none black;}
-      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten { border: 2px solid; background-color: black; margin-top: 30px; margin-bottom: 60px; max-width: 60%; }
+      .cover-container {
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        width: 25%; /* The size you want */
+        margin-top: 4px;
+        margin-bottom: 4px;
+        margin-left: 2px;
+        margin-right: 2px;
+      }
 
-      .spinner {
+      .cover-container:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
+      }
+
+      .cover-container button {
+        position: absolute; /* Take your picture out of the flow */
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0; /* Make the picture taking the size of it's parent */
+        width: 100%; /* This if for the object-fit */
+        height: 100%; /* This if for the object-fit */
+        object-fit: cover; /* Equivalent of the background-size: cover; of a background-image */
+        object-position: center;
+      }
+
+      .mobileShow {display: none;}
+      @media only screen and (min-device-width : 320px) and (max-device-width : 480px)
+      {
+        .mobileShow {display: inline;}
+      }
+
+
+      /* .emscripten { text-align: center; } */
+      /* .emscripten_border { border: 2px solid black; background-color: white; } */
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      canvas.emscripten { border: 2px solid black; background-color: black;  width: 60%; height: 100; }
+
+      /* .spinner {
         height: 30px;
         width: 30px;
         margin: 0;
@@ -57,7 +84,7 @@
         
         border-radius: 100%;
         background-color: rgb(189, 215, 46);
-      }
+      } */
 
       @-webkit-keyframes rotation {
         from {-webkit-transform: rotate(0deg);}
@@ -76,7 +103,7 @@
         to {transform: rotate(360deg);}
       }
 
-      #status {
+      /* #status {
         display: inline-block;
         vertical-align: top;
         margin-top: 20px;
@@ -84,63 +111,59 @@
         margin-left: 20px;
         font-weight: bold;
         color: rgb(120, 120, 120);
-      }
+      } */
 
-      #progress {
+      /* #progress {
         height: 0px;
         width: 300px;
-      }
+      } */
 
     </style>
   </head>
   <body>
-    <div class="emscripten" id="status"></div>
 
-    <div class="emscripten">
-      <progress value="0" max="100" id="progress" hidden=1></progress>
-    </div>
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
 
-    <div class="emscripten_border">
-      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
-    </div>
-
-    <div class="emscripten">
+    <div class="mobileShow">
       <button
-          class="controls"
+          class="cover-container"
           data-key="ArrowUp"
           data-which="38"
       >
       </button>
     </div>
-    <div class="emscripten">
+    <div class="mobileShow">
       <button
-          class="controls"
+          class="cover-container"
           data-key="ArrowLeft"
           data-which="37"
       >
       </button>
       <button
-          class="controls"
+          class="cover-container"
           data-key="Enter"
           data-which="13"
       >
       </button>
       <button
-          class="controls"
+          class="cover-container"
           data-key="ArrowRight"
           data-which="39"
       >
       </button>
     </div>
-
-    <div class="emscripten">
+    <div class="mobileShow">
       <button
-          class="controls"
+          class="cover-container"
           data-key="ArrowDown"
           data-which="40"
       >
       </button>
     </div>
+
+    <div id="status" style="display: none;"></div>
+
+    <div value="0" max="100" id="progress" hidden=1 style="display: none;"></div>
 
     <script type='text/javascript'>
       var statusElement = document.getElementById('status');
@@ -269,7 +292,6 @@
       window.onload = function() {
         if(!window.location.hash) {
           window.location = window.location + '#loaded';
-          window.location.reload();
           setTimeout(function() {
             window.location.reload();
           }, 1000);
