@@ -14,6 +14,8 @@ The game can be played [here]({{ site.baseurl }}{% link /Snake.html %}).
 
 Please refresh the page if it does not load. The snake can be controlled with the "up", "down", "left", and "right" arrow keys, and the game can be restarted after a collision by pressing the "return" key. Some browsers may not support running the program such as mobile devices which lack a physical keyboard.
 
+One of the more interesting aspects of the program was the design of a low level random number generator. I used a Lehmer algorithm for this purpose which worked out well. Using this random number generation I was able to account for different grid dimensions automatically by calculating the minimum amount of "randomness" that the algorithm requires for the selected grid dimension. The current world time is used as a starting seed, but on the 8-Bit CPU the contents of memory or a register could be used, which are random on power up.
+
 This code was written entirely in C++ as seen at my [GitHub][GitHub], so in order to get the program to execute in a web browser I used the emscripten toolchain.
 
 [GitHub]: https://github.com/rstuerm/SnakeGame
