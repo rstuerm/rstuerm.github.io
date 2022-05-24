@@ -122,43 +122,47 @@
   </head>
   <body>
 
-    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
-
-    <div class="mobileShow">
-      <button
-          class="cover-container"
-          data-key="ArrowUp"
-          data-which="38"
-      >
-      </button>
+    <div>
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
     </div>
+    
     <div class="mobileShow">
-      <button
-          class="cover-container"
-          data-key="ArrowLeft"
-          data-which="37"
-      >
-      </button>
-      <button
-          class="cover-container"
-          data-key="Enter"
-          data-which="13"
-      >
-      </button>
-      <button
-          class="cover-container"
-          data-key="ArrowRight"
-          data-which="39"
-      >
-      </button>
-    </div>
-    <div class="mobileShow">
-      <button
-          class="cover-container"
-          data-key="ArrowDown"
-          data-which="40"
-      >
-      </button>
+      <div>
+        <button
+            class="cover-container"
+            data-key="ArrowUp"
+            data-which="38"
+        >
+        </button>
+      </div>
+      <div>
+        <button
+            class="cover-container"
+            data-key="ArrowLeft"
+            data-which="37"
+        >
+        </button>
+        <button
+            class="cover-container"
+            data-key="Enter"
+            data-which="13"
+        >
+        </button>
+        <button
+            class="cover-container"
+            data-key="ArrowRight"
+            data-which="39"
+        >
+        </button>
+      </div>
+      <div>
+        <button
+            class="cover-container"
+            data-key="ArrowDown"
+            data-which="40"
+        >
+        </button>
+      </div>
     </div>
 
     <div id="status" style="display: none;"></div>
@@ -289,14 +293,14 @@
 
       // Add delay to reload webpage on first visit automatically
 
-      window.onload = function() {
-        if(!window.location.hash) {
-          window.location = window.location + '#loaded';
-          setTimeout(function() {
-            window.location.reload();
-          }, 1000);
-        }
-      }
+      // window.onload = function() {
+      //   if(!window.location.hash) {
+      //     window.location = window.location + '#loaded';
+      //     setTimeout(function() {
+      //       window.location.reload();
+      //     }, 1000);
+      //   }
+      // }
 
     </script>
     <script async type="text/javascript" src="assets/SnakeGame/Snake.js"></script>
