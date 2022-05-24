@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Snake Game</title>
-    <!-- <meta name="viewport" 
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->
     <style>
 
       button:active{background-color:rgb(120, 120, 120);}
@@ -28,7 +26,7 @@
         margin-left: auto;
         margin-right: auto;
         position: relative;
-        width: 25%; /* The size you want */
+        width: 22%; /* The size you want */
         margin-top: 4px;
         margin-bottom: 4px;
         margin-left: 2px;
@@ -42,7 +40,7 @@
       }
 
       .controls button {
-        position: absolute; /* Take your picture out of the flow */
+        position: relative; /* Take your picture out of the flow */
         top: 0;
         bottom: 0;
         left: 0;
@@ -124,6 +122,8 @@
     </style>
   </head>
   <body>
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
     <div>
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
