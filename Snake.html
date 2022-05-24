@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Emscripten-Generated Code</title>
+    <title>Snake Game</title>
     <style>
 
       .controls {
@@ -34,7 +34,7 @@
       div.emscripten { text-align: center; }      
       div.emscripten_border { border: 0px none black;}
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten { border: 2px solid; background-color: black; margin-top: 30px; margin-bottom: 60px; width: 60%}
+      canvas.emscripten { border: 2px solid; background-color: black; margin-top: 30px; margin-bottom: 60px; max-width: 60%; }
 
       .spinner {
         height: 30px;
@@ -265,21 +265,15 @@
       });
 
       // Add delay to reload webpage on first visit automatically
-      (function()
-      {
-        if( window.localStorage )
-        {
-          if( !localStorage.getItem('firstLoad') )
-          {
-            localStorage['firstLoad'] = true;
-            setTimeout(function() {
-              window.location.reload();
-            }, 1000);
-          }  
-          else
-            localStorage.removeItem('firstLoad');
+
+      window.onload = function() {
+        if(!window.location.hash) {
+          window.location = window.location + '#loaded';
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
         }
-      })();
+      }
 
     </script>
     <script async type="text/javascript" src="assets/SnakeGame/Snake.js"></script>
