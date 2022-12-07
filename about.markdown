@@ -5,7 +5,7 @@ permalink: /about/
 label: About
 ---
 
-I am a graduate student attending the University of Alberta studying quantum computers. I am currently enrolled in a Masters degree, but I will be applying for direct transfer to a PhD program of the same topic come fall of 2022.
+I am a graduate student attending the University of Alberta studying quantum computers. I am currently enrolled in a Masters degree, but will be applying for transfer to a PhD program of the same topic within my first year of graduate studies.
 
 # Education
 
