@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "FEM Simulator and Particle Capture"
+title:  "FEM Simulator"
 date:   2022-11-07 10:04:54 -0600
 categories:
 image: /assets/FEMSimulator/FEMSimulator.png
