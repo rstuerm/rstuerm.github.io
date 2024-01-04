@@ -5,11 +5,13 @@ permalink: /about/
 label: About
 ---
 
-I am a graduate student attending the University of Alberta studying quantum computers. I am currently enrolled in a Masters degree, but will be applying for transfer to a PhD program of the same topic within my first year of graduate studies.
+I am a graduate student completing a PhD in Electrical Engineering at the University of Alberta where I am studying quantum computers. In particular, I am studying the initialization of spin-qubits through quantum transport simulations.
+
+This website serves as a work-in-progress portfolio of a select few projects that I have worked on in my spare time. I aim to include pages for additional projects as I find the time.
 
 # Education
 
-* MSc in Electrical and Computer Engineering, Solid State Electronics, University of Alberta, 2022 -- present
+* PhD in Electrical and Computer Engineering, Solid State Electronics, University of Alberta, 2022 -- present
 * BSc in Engineering Physics Co-op, University of Alberta, 2017 -- 2022
 
 # Published Work:
