@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "3D Printing for Home-Mounted Ski Bindings"
+title:  "Mounting Ski Bindings with a 3D Printer"
 date:   2024-01-15 08:04:54 -0600
 categories:
 image: /assets/SkiBindings/SkiBindings.jpg
