@@ -59,7 +59,7 @@ On the other hand, the vertical midline should be aligned with the center line o
 
 Prior to clamping the printed jig to the template, I made some very careful measurements with calipers in order to draw a vertical and horizontal midlines on strips of Scotch tape with a pencil and ruler. These are the lines that the midline markers of the jig will be aligned to. Of note, don't trust any graphics on the ski top-sheet when drawing these midlines. My skis seemingly had two straight vertical lines that I could align my jig to, but they were actually 1 mm off-center from the skis true center. 
 
-<img src="/assets/SkiBindings/Midline.jpg" alt="" width="65%" class="image"/>
+<!-- <img src="/assets/SkiBindings/Midline.jpg" alt="" width="65%" class="image"/> -->
 
 After aligning and clamping down the jig, I used a fine-tip marker to draw out the location of each hole. I then removed the jig and placed the toe and heel binding piece on the ski to check the holes would be aligned correctly. To be extra sure, I measured the location of these marks relative to each other and to the ski edges.
 
@@ -81,7 +81,7 @@ I re-clamped the jig to the skis (now aligned with both the marker shapes and th
 
 To clean up the holes and provide a little room for the material to expand as the binding screws are eventually screwed into the holes, I added a small countersink to each hole with a large drill bit by hand. 
 
-<img src="/assets/SkiBindings/Countersink.jpg" alt="" width="65%" class="image"/>
+<!-- <img src="/assets/SkiBindings/Countersink.jpg" alt="" width="65%" class="image"/> -->
 
 As a last step, I vacuumed out the holes of all the drill shavings.
 
@@ -123,6 +123,6 @@ Finally, I brushed off the wax using a cheap household cleaning brush with firm 
 
 The boots I bought were a little too colorful for my liking, so I dyed them with the graphite color of Rit DyeMore synthetic dye. I simply removed the liner from the boots, boiled enough water to submerge the boots, then let the boot shells sit in the near-boiling water and dye mixture for a few hours. A few rinses in cool water to remove excess dye and the boots were good to go.
 
-<img src="/assets/SkiBindings/DyedBoot.jpg" alt="" width="65%" class="image"/>
+<!-- <img src="/assets/SkiBindings/DyedBoot.jpg" alt="" width="65%" class="image"/> -->
 <img src="/assets/SkiBindings/Boot.jpg" alt="" width="65%" class="image"/>
 
