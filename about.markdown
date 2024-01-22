@@ -7,7 +7,7 @@ label: About
 
 I am a graduate student completing a PhD in Electrical Engineering at the University of Alberta where I am studying quantum computers. In particular, I am studying the initialization of spin-qubits through quantum transport simulations.
 
-This website serves as a work-in-progress portfolio of some select projects that I have worked on in my spare time. I may also add an occasional less-technical guide. I aim to include pages for additional projects as I find the time.
+This website serves as a portfolio of some projects that I have worked on in my spare time. However, I may also include an occasional less-technical guide. Some projects and write-ups are currently works-in-progress, which I aim to update as I find time.
 
 # Education
 
