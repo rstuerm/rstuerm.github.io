@@ -109,20 +109,12 @@ With the mount complete, the epoxy needs to cure for (at least) a day before usi
 
 <img src="/assets/SkiBindings/SkiBindings2.jpg" alt="" width="65%" class="image"/>
 
-# Waxing the Skis – Bonus
+# Waxing the Skis
 
-I found my skis were not sufficiently waxed straight from the factory, so I did this myself. While there is a lot of information on this process online, I wanted to give a few tips.
+I wanted to re-wax my skis. While there is a lot of information on this process online, here are a few tips.
 
 First, I found a normal clothes iron to work great, but I used tinfoil over the iron surface to prevent wax from filling the iron holes. I used the "cotton-blend" heat for applying the ski wax. 
 
-To scrape the wax, I also did not use any ski-specific tools. I found a thick metal carpentry ruler worked well to scrape off the wax from head to toe along the length of the ski. I found it essential to keep the ruler clean of any wax, otherwise it would fail to scrape off additional wax. I also found it helpful to flex the ruler such that there was a slight convex edge contacting the ski. This allowed me some control over which portion of the ski was being scraped, allowing the entire surface to be scaped.
+To scrape the wax, I also did not use any ski-specific tools. I found a thick metal carpentry ruler worked well to scrape off the wax from head to toe along the length of the ski. I found it essential to keep the ruler clean of any wax, otherwise it would fail to scrape off additional wax. I also found it helpful to flex the ruler such that there was a slight convex edge contacting the ski. This allowed me some control over which portion of the ski was being scraped, which eventually allowed the entire surface to be scaped.
 
 Finally, I brushed off the wax using a cheap household cleaning brush with firm plastic bristles. 
-
-# Boot Dye – Bonus
-
-The boots I bought were a little too colorful for my liking, so I dyed them with the graphite color of Rit DyeMore synthetic dye. I simply removed the liner from the boots, boiled enough water to submerge the boots, then let the boot shells sit in the near-boiling water and dye mixture for a few hours. A few rinses in cool water to remove excess dye and the boots were good to go.
-
-<img src="/assets/SkiBindings/DyedBoot.jpg" alt="" width="65%" class="image"/>
-<img src="/assets/SkiBindings/Boot.jpg" alt="" width="65%" class="image"/>
-
