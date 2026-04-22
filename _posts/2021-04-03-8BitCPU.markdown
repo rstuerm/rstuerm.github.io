@@ -4,6 +4,8 @@ title:  "Low-Level 8-Bit CPU"
 date:   2021-04-03 13:04:54 -0600
 categories:
 image: /assets/8BitCPU/8BitCPU.jpg
+redirect_from:
+  - /8bitcpu.html
 ---
 <meta name="format-detection" content="telephone=no">
 
