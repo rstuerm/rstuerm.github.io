@@ -5,8 +5,6 @@ date:   2024-01-15 08:04:54 -0600
 categories:
 image: /assets/SkiBindings/SkiBindings.jpg
 ---
-<meta name="format-detection" content="telephone=no">
-
 &nbsp;
 
 # Background
@@ -69,7 +67,7 @@ After aligning and clamping down the jig, I used a fine-tip marker to draw out t
 
 <img src="/assets/SkiBindings/Marker.jpg" alt="" width="65%" class="image"/>
 
-As a final sanity check before drilling, I placed the drill bit and depth stop correctly into a hole in the jig and then placed the jig offset onto the ski to compare the maximum drill depth to the height of the ski to ensure the drill bit would not pass through the ski, as seen below. Of course, before drilling the ski I also drilled into a two-by-four with the jig and measured the depth with a caliper to ensure the hole was 9.5 mm deep.
+Before drilling the ski I drilled into a two-by-four with the jig and measured the depth with a caliper to ensure the hole was 9.5 mm deep. As a final sanity check, I placed the drill bit and depth stop correctly into a hole in the jig and then placed the jig offset onto the ski to compare the maximum drill depth to the height of the ski to ensure the drill bit would not pass through the ski, as seen below.
 
 <img src="/assets/SkiBindings/Depth.jpg" alt="" width="65%" class="image"/>
  

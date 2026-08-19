@@ -31,7 +31,7 @@ wide variety of instructions, it can be categorized as a complex instruction set
 computer (CISC) as opposed to a reduced instruction set computer (RISC), which
 is more common today. A CISC architecture is the natural starting point for a
 relatively simple CPU since it limits the length of the assembly code required
-to run a program. The initial inspiration for my design came from the work of
+to run a program. The inspiration for my design came from the work of
 Ben Eater.
 
 The schematic of the full CPU can be downloaded as a PDF [here][schematic], and

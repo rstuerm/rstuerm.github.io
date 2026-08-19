@@ -5,7 +5,7 @@ permalink: /about/
 label: About
 ---
 
-I am a graduate student completing a PhD in Electrical Engineering at the University of Alberta where I am studying quantum computers. In particular, I am studying the initialization of spin-qubits through quantum transport simulations.
+I am a graduate student completing a PhD in Electrical Engineering at the University of Alberta where I am studying nanoelectronics. In particular, my work mainly focuses on quantum transport simulations of chiral molecule. Potential future applications include the initialization of spin qubits in quantum computers.
 
 This website serves as a portfolio of some projects that I have worked on in my spare time. However, I may also include an occasional less-technical guide. Some projects and write-ups are currently works-in-progress, which I aim to update as I find time.
 
@@ -16,13 +16,18 @@ This website serves as a portfolio of some projects that I have worked on in my 
 
 # Published Work:
 
-1. [J. Chen, Y. Feng, and S. MacKay, Bionanotechnology: Engineering Concepts and Applications. Columbus, OH: McGraw-Hill Education, 2022.][Chen_2022]  
+1. [R. Stuermer et al., "Spin dependence of charge dynamics and group velocity in chiral molecules," Phys. Rev. B, 2026][Stuermer_2026]
+
+	*Coded simulator, ran simulations, and wrote paper*
+
+2. [J. Chen, Y. Feng, and S. MacKay, Bionanotechnology: Engineering Concepts and Applications. Columbus, OH: McGraw-Hill Education, 2022.][Chen_2022]  
 
 	*Wrote section on dielectrophoresis*
 
-2. [P. A. Duarte et al., “Single ascospore detection for the forecasting of Sclerotinia stem rot of canola,” Lab on a Chip, vol. 20, no. 19, pp. 3644–3652, 2020.][Duarte_2020]  
+3. [P. A. Duarte et al., "Single ascospore detection for the forecasting of Sclerotinia stem rot of canola," Lab on a Chip, vol. 20, no. 19, pp. 3644–3652, 2020.][Duarte_2020]  
 
 	*Co-author, designed circuitry and conducted experiments*
 
 [Duarte_2020]: https://pubs.rsc.org/en/content/articlelanding/2020/LC/D0LC00426J#!divAbstract
 [Chen_2022]: https://www.mheducation.ca/bionanotechnology-engineering-concepts-and-applications-9781260464146-can#tab-label-product-description-title
+[Stuermer_2026]: https://journals.aps.org/prb/abstract/10.1103/1g18-y6f1
