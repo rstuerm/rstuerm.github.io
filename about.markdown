@@ -16,7 +16,7 @@ This website serves as a portfolio of some projects that I have worked on in my 
 
 # Published Work:
 
-1. [R. Stuermer et al., "Spin dependence of charge dynamics and group velocity in chiral molecules," Phys. Rev. B, 2026][Stuermer_2026]
+1. [R. Stuermer et al., "Spin dependence of charge dynamics and group velocity in chiral molecules," Phys. Rev. B, 2026.][Stuermer_2026]
 
 	*Coded simulator, ran simulations, and wrote paper*
 
