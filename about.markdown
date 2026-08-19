@@ -5,7 +5,7 @@ permalink: /about/
 label: About
 ---
 
-I am a graduate student completing a PhD in Electrical Engineering at the University of Alberta where I am studying nanoelectronics. In particular, my work mainly focuses on quantum transport simulations of chiral molecule. Potential future applications include the initialization of spin qubits in quantum computers.
+I am a graduate student completing a PhD in Electrical Engineering at the University of Alberta where I am studying nanoelectronics. In particular, my work mainly focuses on quantum transport simulations involving chiral molecules. Potential future applications include the initialization of spin qubits in quantum computers.
 
 This website serves as a portfolio of some projects that I have worked on in my spare time. However, I may also include an occasional less-technical guide. Some projects and write-ups are currently works-in-progress, which I aim to update as I find time.
 

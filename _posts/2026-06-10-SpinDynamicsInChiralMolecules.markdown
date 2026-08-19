@@ -6,7 +6,7 @@ categories:
 image: /assets/SpinDynamicsInChiralMolecules/SpinDynamicsInChiralMolecules.png
 ---
 
-This theoretical study examines how electrons transport through chiral[^1] molecules. In particular, we shown that electrons with different spin[^2] can transport through a chiral molecule at different speeds. In addition, we show that this difference in transport speed results in a magnetic field that is qualitatively consistent with a reference experiment.
+This theoretical time-dependent study examines how electrons transport through chiral[^1] molecules. In particular, we show that electrons with different spin[^2] states can transport through a chiral molecule at different speeds. In addition, we show that this difference in transport speed results in a magnetic field that is qualitatively consistent with a reference experiment.
 
 [^1]: For visualization, a spring is one example of a chiral shape.
 [^2]: Spin is a property that is intrinsic to particles like electrons.
