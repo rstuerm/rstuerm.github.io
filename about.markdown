@@ -29,5 +29,5 @@ This website serves as a portfolio of some projects that I have worked on in my 
 	*Co-author, designed circuitry and conducted experiments*
 
 [Duarte_2020]: https://pubs.rsc.org/en/content/articlelanding/2020/LC/D0LC00426J#!divAbstract
-[Chen_2022]: https://www.mheducation.ca/bionanotechnology-engineering-concepts-and-applications-9781260464146-can#tab-label-product-description-title
+[Chen_2022]: https://www.accessengineeringlibrary.com/content/book/9781260464146
 [Stuermer_2026]: https://journals.aps.org/prb/abstract/10.1103/1g18-y6f1
